@@ -14,6 +14,11 @@ def format_temperature(temp):
         A string contain the temperature and "degrees Celcius."
     """
     return f"{temp}{DEGREE_SYMBOL}"
+print(format_temperature(120))
+
+#what i'm passing is a string type. aSK mARINA
+
+# print(format f"{temp}{DEGREE_SYMBOL}"
 
 
 def convert_date(iso_string):
@@ -25,6 +30,8 @@ def convert_date(iso_string):
         A date formatted like: Weekday Date Month Year e.g. Tuesday 06 July 2021
     """
     pass
+    #FUNCTION RETURNING "NONE' its either not returning. The assertionError tells you what you should be returning e.g  (57.0, 1)
+
 
 
 def convert_f_to_c(temp_in_fahrenheit):
@@ -58,6 +65,7 @@ def load_data_from_csv(csv_file):
         A list of lists, where each sublist is a (non-empty) line in the csv file.
     """
     pass
+# print(find_min([1,2,3])) call the function that you are creating, print it (and then delete after it working)
 
 
 def find_min(weather_data):
