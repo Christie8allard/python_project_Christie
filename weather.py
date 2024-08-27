@@ -29,7 +29,8 @@ def convert_date(iso_string):
     Returns:
         A date formatted like: Weekday Date Month Year e.g. Tuesday 06 July 2021
     """
-    pass
+    date = datetime.fromisoformat(iso_string)
+    return date.strftime("%A %d %B %Y")
     #FUNCTION RETURNING "NONE' its either not returning. The assertionError tells you what you should be returning e.g  (57.0, 1)
 
 
@@ -42,7 +43,16 @@ def convert_f_to_c(temp_in_fahrenheit):
     Returns:
         A float representing a temperature in degrees Celcius, rounded to 1 decimal place.
     """
-    pass
+
+    num2 =float(temp_in_fahrenheit)
+    # print(type(num2))
+    # print(num2+1)
+    # print (temp_in_fahrenheit,type(temp_in_fahrenheit))
+    celsius = (num2 - 32) * 5 / 9
+    print(celsius,type(celsius))
+    formatted_value = float("{:.1f}".format(celsius))
+    print(formatted_value,type(formatted_value))
+    return formatted_value
 
 
 def calculate_mean(weather_data):
@@ -53,7 +63,16 @@ def calculate_mean(weather_data):
     Returns:
         A float representing the mean value.
     """
-    pass
+    total = 0
+    for data in weather_data:
+        # print(data)
+        data = float(data)
+        # print(data)
+        total += data
+
+    return total / len(weather_data)
+
+# print(calculate_mean(["51", "58", "59", "52", "52", "48", "47", "53"]))
 
 
 def load_data_from_csv(csv_file):
