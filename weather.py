@@ -16,7 +16,7 @@ def format_temperature(temp):
     return f"{temp}{DEGREE_SYMBOL}"
 print(format_temperature(120))
 
-#what i'm passing is a string type. aSK mARINA
+#what i'm passing is a string type. 
 
 # print(format f"{temp}{DEGREE_SYMBOL}"
 
@@ -75,7 +75,8 @@ def calculate_mean(weather_data):
 # print(calculate_mean(["51", "58", "59", "52", "52", "48", "47", "53"]))
 
 
-def load_data_from_csv(csv_file):
+import csv
+def load_data_from_csv(csv_file): #read Csv file
     """Reads a csv file and stores the data in a list.
 
     Args:
@@ -83,8 +84,27 @@ def load_data_from_csv(csv_file):
     Returns:
         A list of lists, where each sublist is a (non-empty) line in the csv file.
     """
-    pass
-# print(find_min([1,2,3])) call the function that you are creating, print it (and then delete after it working)
+    #want to read file
+    #for every row of data make a list (but skip the header row first)
+    #ensure empty rows don't get a list
+    data = []
+    with open(csv_file, mode='r',) as file:
+        csv_reader = csv.reader(file)
+        # how do I pull the data here?
+        for row in csv_reader:
+            if row:
+                data.append(row)
+                # row[1] = int(row[1]) conter 2 elemtn at end to ints. for loop of data.
+        data.pop(0)
+    return data
+
+#     csv_file = data(files)
+#     with open(csv_file, mode="r") as files:
+#         data = []
+#         for row in csv_file:
+#             print(row)
+
+    
 
 
 def find_min(weather_data):
@@ -95,7 +115,27 @@ def find_min(weather_data):
     Returns:
         The minimum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    pass
+    #weather data is integers/strings and floats. I need to convert these to integers?
+    #print(find_min([1,2,3])) #call the function that you are creating, print it (and then delete after it working)
+    # weather = float(weather_data)
+    # print(find_min([1,2,3]))
+    if not weather_data:
+        return None, None
+    
+    min_value = weather_data[0]
+    min_index = 0
+
+    for index, value in enumerate(weather_data):
+        if value <= min_value:
+            min_value = value
+            min_index = index
+    return min_value, min_index
+
+
+
+
+
+
 
 
 def find_max(weather_data):
