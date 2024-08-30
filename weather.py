@@ -117,16 +117,29 @@ def find_min(weather_data):
     """
     #weather data is integers/strings and floats. I need to convert these to integers?
     #print(find_min([1,2,3])) #call the function that you are creating, print it (and then delete after it working)
-    # weather = float(weather_data)
-    # print(find_min([1,2,3]))
+    # F[10.4, 14.5, 12.9, 8.9, 10.5, 11.7]
+# F[-10, -8, 2, -16, 4]
+# F[49, 57, 56, 55, 53]
+# F[49, 57, 56, 55, 57, 53, 49]
+# F['49', '57', '56', '55', '53', '49']
+
+    variable_index = 0 #whenever I change this changes the values
+    #print (f"this is the first index{weather_data[variable_index]}") #the first element 
     if not weather_data:
-        return None, None
+        return ()
+    
+    for x in weather_data:
+        #print(x,type(x))
+        weather_data[variable_index] = float(x) #is each element in the list, as we've definded the type it can then be tranferred
+        variable_index = variable_index+1 #we're creativng a variable index to keep track of the index that we're modifying as we 
+    #for x in weather_data:
+        #print(x,type(x))
     
     min_value = weather_data[0]
     min_index = 0
 
     for index, value in enumerate(weather_data):
-        if value <= min_value:
+        if value <= min_value: #will change to the last occurance 
             min_value = value
             min_index = index
     return min_value, min_index
@@ -146,7 +159,17 @@ def find_max(weather_data):
     Returns:
         The maximum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    pass
+
+#read data
+#find value with greatest value
+#return greatest value and position in list?
+#if many items the same value return the last entry?
+#weather data
+# F[10.4, 14.5, 12.9, 8.9, 10.5, 11.7]
+# F[-10, -8, 2, -16, 4]
+# F[49, 57, 56, 55, 53]
+# F[49, 57, 56, 55, 57, 53, 49] 
+# F['49', '57', '56', '55', '53', '49']
 
 
 def generate_summary(weather_data):
@@ -158,6 +181,8 @@ def generate_summary(weather_data):
         A string containing the summary information.
     """
     pass
+#reads what's in the file
+#returns a list of the types of items in the file?
 
 
 def generate_daily_summary(weather_data):
