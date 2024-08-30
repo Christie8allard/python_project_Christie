@@ -115,23 +115,15 @@ def find_min(weather_data):
     Returns:
         The minimum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    #weather data is integers/strings and floats. I need to convert these to integers?
-    #print(find_min([1,2,3])) #call the function that you are creating, print it (and then delete after it working)
-    # F[10.4, 14.5, 12.9, 8.9, 10.5, 11.7]
-# F[-10, -8, 2, -16, 4]
-# F[49, 57, 56, 55, 53]
-# F[49, 57, 56, 55, 57, 53, 49]
-# F['49', '57', '56', '55', '53', '49']
 
-    variable_index = 0 #whenever I change this changes the values
-    #print (f"this is the first index{weather_data[variable_index]}") #the first element 
-    if not weather_data:
+    variable_index = 0 #whatever this number is identifies the order in the list
+    if not weather_data: #if there's nothing to see in the list return nothing
         return ()
     
     for x in weather_data:
-        #print(x,type(x))
-        weather_data[variable_index] = float(x) #is each element in the list, as we've definded the type it can then be tranferred
-        variable_index = variable_index+1 #we're creativng a variable index to keep track of the index that we're modifying as we 
+        #print(x,type(x)) - this will show me if I have strings, ints etc. 
+        weather_data[variable_index] = float(x) #for every element in the list we define the type and make it a float
+        variable_index = variable_index+1 #we're creating a variable index to keep track of the index that we're modifying as we go
     #for x in weather_data:
         #print(x,type(x))
     
@@ -145,12 +137,6 @@ def find_min(weather_data):
     return min_value, min_index
 
 
-
-
-
-
-
-
 def find_max(weather_data):
     """Calculates the maximum value in a list of numbers.
 
@@ -159,17 +145,22 @@ def find_max(weather_data):
     Returns:
         The maximum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
+#     variable_index = 0
+#     if not weather_data:
+#         return ()
+    
+#     for x in weather_data:
+#         weather_data[variable_index] = float(x)
+#         variable_index = variable_index+1
 
-#read data
-#find value with greatest value
-#return greatest value and position in list?
-#if many items the same value return the last entry?
-#weather data
-# F[10.4, 14.5, 12.9, 8.9, 10.5, 11.7]
-# F[-10, -8, 2, -16, 4]
-# F[49, 57, 56, 55, 53]
-# F[49, 57, 56, 55, 57, 53, 49] 
-# F['49', '57', '56', '55', '53', '49']
+#     min_value = weather_data[0]
+#     min_index = 0
+
+#     for index, value in enumerate(weather_data):
+# pass
+
+
+
 
 
 def generate_summary(weather_data):
@@ -180,9 +171,24 @@ def generate_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    pass
-#reads what's in the file
-#returns a list of the types of items in the file?
+    #reads what's in the file
+    #returns a list of the types of items in the file?
+    daily_summaries = ""
+    if len(weather_data) > 0:
+        overview = f"{len(weather_data)}"
+        min_temp, min_index = find_min([day[1] for day in weather_data])
+        max_temp, max_index = find_max([day[2] for day in weather_data])
+        average_low = calculate_mean(day[1] for day in weather_data)
+        average_high = calculate_mean(day[2] for day in weather_data)
+        min_day = convert_date(weather_data[min_index][0])
+        max_day = convert_date(weather_data[max_index][0])
+        daily_summaries += f"{overview} Day Overview\n"
+        daily_summaries += f"  The lowest temperature will be {format_temperature(convert_f_to_c(min_temp))}, and will occur on {min_day}.\n"
+        daily_summaries += f"  The highest temperature will be {format_temperature(convert_f_to_c(max_temp))}, and will occur on {max_day}.\n"
+        daily_summaries += f"  The average low this week is {format_temperature(convert_f_to_c(average_low))}.\n"
+        daily_summaries += f"  The average high this week is {format_temperature(convert_f_to_c(average_high))}.\n"
+    return daily_summaries
+
 
 
 def generate_daily_summary(weather_data):
@@ -193,4 +199,11 @@ def generate_daily_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    pass
+    daily_summaries = ""
+    for day in weather_data:
+        date = "---- " + convert_date(day[0]) + " ----"
+        min_temp = format_temperature(convert_f_to_c(day[1]))
+        max_temp = format_temperature(convert_f_to_c(day[2]))
+        summary = f"{date}\n  Minimum Temperature: {min_temp}\n  Maximum Temperature: {max_temp}\n\n"
+        daily_summaries += summary
+    return daily_summaries
