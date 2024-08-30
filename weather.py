@@ -145,20 +145,21 @@ def find_max(weather_data):
     Returns:
         The maximum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-#     variable_index = 0
-#     if not weather_data:
-#         return ()
+    variable_index = 0
+    if not weather_data:
+        return ()
     
-#     for x in weather_data:
-#         weather_data[variable_index] = float(x)
-#         variable_index = variable_index+1
+    for x in weather_data:
+        weather_data[variable_index] = float(x)
+        variable_index = variable_index+1
 
-#     min_value = weather_data[0]
-#     min_index = 0
+    min_value = weather_data[0]
+    min_index = 0
 
-#     for index, value in enumerate(weather_data):
-# pass
-
+    for index, value in enumerate(weather_data):
+            if value <= min_value:
+                min_value = value
+                min_index = index
 
 
 
