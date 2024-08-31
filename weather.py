@@ -49,9 +49,9 @@ def convert_f_to_c(temp_in_fahrenheit):
     # print(num2+1)
     # print (temp_in_fahrenheit,type(temp_in_fahrenheit))
     celsius = (num2 - 32) * 5 / 9
-    print(celsius,type(celsius))
+    # print(celsius,type(celsius))
     formatted_value = float("{:.1f}".format(celsius))
-    print(formatted_value,type(formatted_value))
+    # print(formatted_value,type(formatted_value))
     return formatted_value
 
 
@@ -91,11 +91,16 @@ def load_data_from_csv(csv_file): #read Csv file
     with open(csv_file, mode='r',) as file:
         csv_reader = csv.reader(file)
         # how do I pull the data here?
-        for row in csv_reader:
+        for i, row in enumerate(csv_reader):
+            #print(i)
             if row:
+                if i == 0:
+                    continue
                 data.append(row)
-                # row[1] = int(row[1]) conter 2 elemtn at end to ints. for loop of data.
-        data.pop(0)
+                #print(row)
+                row[1] = int(row[1])
+                row[2] = int(row[2]) #conter 2 elemtn at end to ints. for loop of data.
+        #data.pop(0)  
     return data
 
 #     csv_file = data(files)
@@ -137,7 +142,7 @@ def find_min(weather_data):
     return min_value, min_index
 
 
-def find_max(weather_data):
+def find_max(weather_data):  
     """Calculates the maximum value in a list of numbers.
 
     Args:
@@ -153,14 +158,14 @@ def find_max(weather_data):
         weather_data[variable_index] = float(x)
         variable_index = variable_index+1
 
-    min_value = weather_data[0]
-    min_index = 0
+    max_value = float('-inf') #ensures first number on list always larger. Better than zero if your data includes negitives.
+    max_index = -1
 
     for index, value in enumerate(weather_data):
-            if value <= min_value:
-                min_value = value
-                min_index = index
-
+            if value >= max_value:
+                max_value = value
+                max_index = index
+    return max_value, max_index
 
 
 
@@ -172,23 +177,60 @@ def generate_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    #reads what's in the file
-    #returns a list of the types of items in the file?
-    daily_summaries = ""
-    if len(weather_data) > 0:
-        overview = f"{len(weather_data)}"
-        min_temp, min_index = find_min([day[1] for day in weather_data])
-        max_temp, max_index = find_max([day[2] for day in weather_data])
-        average_low = calculate_mean(day[1] for day in weather_data)
-        average_high = calculate_mean(day[2] for day in weather_data)
-        min_day = convert_date(weather_data[min_index][0])
-        max_day = convert_date(weather_data[max_index][0])
-        daily_summaries += f"{overview} Day Overview\n"
-        daily_summaries += f"  The lowest temperature will be {format_temperature(convert_f_to_c(min_temp))}, and will occur on {min_day}.\n"
-        daily_summaries += f"  The highest temperature will be {format_temperature(convert_f_to_c(max_temp))}, and will occur on {max_day}.\n"
-        daily_summaries += f"  The average low this week is {format_temperature(convert_f_to_c(average_low))}.\n"
-        daily_summaries += f"  The average high this week is {format_temperature(convert_f_to_c(average_high))}.\n"
-    return daily_summaries
+    # iterate over list of lists
+    # have a string that you add to ech iteration
+    # use fuctions to convert f to c and date format (within iteration)
+    # make format daily summary (within iteration)
+    # return daily summary after for loop
+    num_of_days = len(weather_data)
+    # print(num_of_days)
+    # weather_min = find_min()
+    # weather_min= (convert_f_to_c(the_min))
+    # weather_max= (convert_f_to_c(the_max))
+    min_list = []
+    for row in weather_data:
+        min_value = row[1]
+        min_list.append(min_value)
+    min_value, min_position =find_min(min_list)  
+    cel_min_value = convert_f_to_c(min_value)
+    # print(weather_data)
+    # print(min_position)
+    # print(weather_data[min_position][0])
+    min_day = convert_date(weather_data[min_position][0])
+
+    max_list = []
+    for row in weather_data:
+        max_value = row[2]
+        max_list.append(max_value)
+    max_value, max_postion = find_max(max_list)
+    max_day = convert_date(weather_data[max_postion][0])
+    cel_max_value = convert_f_to_c(max_value)
+
+    min_average = convert_f_to_c(calculate_mean(min_list))
+    max_average = convert_f_to_c(calculate_mean(max_list))
+
+    return f"{num_of_days} Day Overview\n  The lowest temperature will be {cel_min_value}°C, and will occur on {min_day}.\n  The highest temperature will be {cel_max_value}°C, and will occur on {max_day}.\n  The average low this week is {min_average}°C.\n  The average high this week is {max_average}°C.\n"
+
+
+    # daily_sum(converted_date,weather_min, weather_max)
+
+# print(generate_summary( [
+#             ["2020-06-19T07:00:00+08:00", -47, -46],
+#             ["2020-06-20T07:00:00+08:00", -51, 67],
+#             ["2020-06-21T07:00:00+08:00", 58, 72],
+#             ["2020-06-22T07:00:00+08:00", 59, 71],
+#             ["2020-06-23T07:00:00+08:00", -52, 71],
+#             ["2020-06-24T07:00:00+08:00", 52, 67],
+#             ["2020-06-25T07:00:00+08:00", -48, 66],
+#             ["2020-06-26T07:00:00+08:00", 53, 66]
+#         ]))
+
+# 8 Day Overview
+#   The lowest temperature will be -46.7°C, and will occur on Tuesday 23 June 2020.
+#   The highest temperature will be 22.2°C, and will occur on Sunday 21 June 2020.
+#   The average low this week is -16.1°C.
+#   The average high this week is 12.4°C.
+
 
 
 
